@@ -196,7 +196,6 @@ Scope = function(){
 MCE = function(){
     this.mt = new MersenneTwister(0);
     this.date = new Date();
-    this.stack = []; // 変数リストのリスト
     this.scope = null; // Scopeの先頭（単方向リスト）
     this.externalVar = {}; // 外部変数
     this.externalVarRequest = {}; // 外部変数要求
@@ -206,15 +205,12 @@ MCE = function(){
 MCE.prototype = {
   // 変数のスコープを作成
   createScope:function(){
-    this.stack.push({}); // TODO: いらない？
-
     var prevScope = this.scope;
     this.scope = new Scope();
     this.scope.next = prevScope;
   },
   // 変数のスコープを破棄
   destroyScope:function(){
-    this.stack.pop(); // TODO: いらない？
     if(this.scope == null){
       throw "error no more scope";
     }
@@ -222,8 +218,6 @@ MCE.prototype = {
   },
   // 今のスタックに　名前、値を紐付ける
   bindVariable: function(name, value){
-    this.stack[this.stack.length - 1][name] = value; // TODO: いらない？
-
     this.scope.body[name] = value;
   },
   // スタックをあがっていってその名前の変数があれば値を紐付ける
@@ -240,14 +234,6 @@ MCE.prototype = {
       // どこにもない場合はローカルにしてみる？
       this.scope.body[name] = value;
     }
-
-    for(var i = this.stack.length - 1; i >= 0; i --){ // TODO: いらない？
-      if(this.stack[i][name] !== undefined){
-        this.stack[i][name] = value;
-        return;
-      }
-    }
-    this.stack[this.stack.length - 1][name] = value;
   },
   // 変数の値の解決
   getVariable:function(name){
@@ -255,26 +241,13 @@ MCE.prototype = {
     while(t){
       if(t.body[name] !== undefined){
         return t.body[name];
-        break;
       }
       t = t.next;
-    }
-    if(t == null){
-      // todo: どこにもない場合は存在しないのでundefinedを返す
-      return undefined;
-    }
-
-    // 未到達コードでは？
-    for(var i = this.stack.length - 1; i >= 0; i --){ // TODO: いらない
-      if(this.stack[i][name] !== undefined){
-        return this.stack[i][name];
-      }
     }
     return undefined;
   },
   run:function(obj){
     this.out = "";
-    //this.stack = []; // TODO: なぜコメントアウトしてるのか？
     this.extArgs = [];
     this.createScope();
 
@@ -355,7 +328,6 @@ MCE.prototype = {
       return self.getVariable('target');
     }]);
 
-
     var ret;
     for(var i=0; i < obj.length; i ++){
       ret = this.execute(obj[i]);
@@ -397,16 +369,6 @@ MCE.prototype = {
     var vArgList = l[1];  // 仮引数
     var block = l[2];     // builtin:[], lambda:処理本体
     l[3]; // builtin: builtin識別子 , lambda: scope
-
-    // todo: ここでscopeを展開するのかな？ で、そこにcreateScopeすればいいのか？
-    //       2回呼ばれたらダメな気がする
-    //       呼び出し後に元のscopeに戻す必要がある
-    //       block 実行時とextArgs実行時でスコープを変化させる？
-    //       block
-    //         // 
-    //       extArgs
-    //         //  今のscope?
-
 
     // 先に引数を評価する
     var tmpArgList = [];
@@ -536,8 +498,6 @@ MCE.prototype = {
         // 最後に評価したlambdaを取り出す
         var target = this.extArgs.pop(); // TODO: popしているのが解せない・・
         // extArgsを処理するときは 上の関数のextArgsが見えるように一度popする (不要かも）
-        var scope = this.stack.pop(); // この関数実行用の領域(この関数の引数リストが含まれている）※evalAllExtArgsは引数がないので空
-        var scope2 = this.stack.pop(); // もうひとつ上の領域 evalAllExtArgsのある関数の引数リスト
 
         // scopeを待避させる
         var tmpScope = this.scope;
@@ -548,8 +508,6 @@ MCE.prototype = {
         ret = this.execute( target.body );
         // scopeを元に戻す
         this.scope = tmpScope;
-        this.stack.push(scope2); // 不要かも
-        this.stack.push(scope); // 不要かも
         this.extArgs.push(target);
 
       }else if(type == 'evalExtArg'){
@@ -557,8 +515,6 @@ MCE.prototype = {
 
         var target = this.extArgs.pop();
         // extArgsを処理するときは 上の関数のextArgsが見えるように一度popする (不要かも)
-        var scope = this.stack.pop(); // この関数実行用の領域(この関数の引数リスト）※evalAllExtArgsは引数がないので空
-        var scope2 = this.stack.pop(); // もうひとつ上の領域 evalAllExtArgsのある関数の引数リスト
 
         // scopeを待避させる
         var tmpScope = this.scope;
@@ -569,8 +525,6 @@ MCE.prototype = {
         // scopeを元に戻す
         this.scope = tmpScope;
 
-        this.stack.push(scope2); // 不要かも
-        this.stack.push(scope); // 不要かも
         this.extArgs.push(target);
 
       }else if(type == 'extArgsLength'){
@@ -595,8 +549,7 @@ MCE.prototype = {
     }
 
     this.destroyScope();
-
-    this.scope = prevScope;
+    this.scope = prevScope; // 折角destroyScopeしているのにここでprevScopeに戻してしまうのはちょっとおかしい
 
     return ret;
   },
