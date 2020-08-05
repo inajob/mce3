@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>MagicalCircleEngine - 魔法陣エンジン</title>
+    <meta name="description" content="Create your own Magical Circle - 君だけの魔法陣を作ろう">
+    <meta property="og:title"       content="MagicalCircleEngine - 魔法陣エンジン">
+    <meta property="og:description" content="Create your own Magical Circle - 君だけの魔法陣を作ろう">
+    <meta property="og:url"         content="https://inajob.github.io/mce3/">
+    <meta name="twitter:card"       content="Create your own Magical Circle">
+    <meta property="og:image"       content="https://inajob.github.io/mce3/imgs/mce.png">
+
+    <style>
+*{
+  margin:0;
+  padding:0;
+}
+body,html{
+  height:100%;
+  width:100%;
+}
+
+#body{
+  height:calc(100% - 30px);
+}
+#title{
+  text-align: center;
+  height: 30px;
+  font-size: 1em;
+  background-color: #99f;
+  color: white;
+}
+
+#draw{
+  width:60%;
+  float:left;
+  height:100%;
+  background-color: white;
+}
+#code{
+  width:40%;
+  height:100%;
+  float:right;
+  background-color: #dfd;
+}
+
+#editor {
+  width: 100%;
+  height: 50%;
+}
+#source-outer {
+  width: 100%;
+  height: 50%;
+}
+#source{
+  width: 100%;
+  height: 100%;
+}
+
+    </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script src="js/render.js" type="text/javascript"></script>
+  <script src="js/ace/src-min/ace.js" type="text/javascript"></script>
+  <script src="js/mce3.js" type="text/javascript"></script>
+  <script>
+    window.addEventListener("load",function(){
+      editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      // plane text mode
+      editor.setValue("rect()")
+      if(document.location.search.length > 0){
+        let s = document.location.search;
+        s = s.replace(/^\?/, "");
+        editor.setValue(decodeURIComponent(s.replace(/\+/g,"%20")));
+      }
+
+      function next(svgText){
+        let elm = document.getElementById("draw");
+        //elm.innerHTML = '<img src="data:image/svg+xml,' + encodeURIComponent(svgText)  + '">'
+        elm.innerHTML = svgText;
+
+        let source = document.getElementById("source");
+        source.value = svgText
+      }
+
+      init(next);
+
+      let timer = null;
+      editor.session.on('change', function(delta){
+        if(timer != null){
+          clearTimeout(timer);
+          timer = null;
+        }
+        timer = setTimeout(() => {
+          init(next);
+          history.replaceState(null, null, "?" + encodeURIComponent(editor.getValue()).replace(/%20/g,"+"))
+        }, 200);
+      })
+    });
+  </script>
+  </head>
+  <body>
+    <h1 id="title">Magical Circle Engine - 魔法陣エンジン</h1>
+    <div id="body">
+      <div id="draw">preview</div>
+      <div id="code">
+        <div id="editor"></div>
+        <div id="source-outer"><textarea id="source"></textarea></div>
+      </div>
+    </div>
+  </body>
+</html>

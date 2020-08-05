@@ -1,0 +1,128 @@
+@font-face {
+  font-family: 'TanukiMagic';
+  font-style: normal;
+  font-weight: normal;
+  src:local('TanukiMagic'), url('../font/TanukiMagic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'DejimaMincho';
+  font-style: normal;
+  font-weight: normal;
+  src:local('DejimaMincho'), url('../font/dejima-mincho-r227.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Hakidame';
+  font-style: normal;
+  font-weight: normal;
+  src:local('Hakidame'), url('../font/hakidame.TTF') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mikachan';
+  font-style: normal;
+  font-weight: normal;
+  src:local('Mikachan'), url('../font/mikachan.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'JiyunoTsubasa';
+  font-style: normal;
+  font-weight: normal;
+  src:local('JiyunoTsubasa'), url('../font/JiyunoTsubasa.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AoyagiReisyoSimo';
+  font-style: normal;
+  font-weight: normal;
+  src:local('AoyagiReisyoSimo'), url('../font/aoyagireisyosimo_ttf_2_02.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'UmeGothic';
+  font-style: normal;
+  font-weight: normal;
+  src:local('UmeGothic'), url('../font/ume-ugo5.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'HanazonoMincho';
+  font-style: normal;
+  font-weight: normal;
+  src:local('HanazonoMincho'), url('../font/HanaMinA.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'IPAMincho';
+  font-style: normal;
+  font-weight: normal;
+  src:local('IPAMincho'), url('../font/ipam.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'IPAGothic';
+  font-style: normal;
+  font-weight: normal;
+  src:local('IPAGothic'), url('../font/ipagp.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'RoundM+';
+  font-style: normal;
+  font-weight: normal;
+  src:local('RoundM+'), url('../font/rounded-mplus-2c-medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'M+Thin';
+  font-style: normal;
+  font-weight: normal;
+  src:local('M+Thin'), url('../font/mplus-2c-thin.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'M+Black';
+  font-style: normal;
+  font-weight: normal;
+  src:local('M+Black'), url('../font/mplus-2c-black.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'LogoTypeGothic';
+  font-style: normal;
+  font-weight: normal;
+  src:local('LogoTypeGothic'), url('../font/07LogoTypeGothic7.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Haranyan';
+  font-style: normal;
+  font-weight: normal;
+  src:local('Haranyan'), url('../font/haranyan.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'KokuGothic';
+  font-style: normal;
+  font-weight: normal;
+  src:local('KokuGothic'), url('../font/font_1_kokugl_1.00_rls.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'KokuMincho';
+  font-style: normal;
+  font-weight: normal;
+  src:local('KokuMincho'), url('../font/font_1_kokumr_1.00_rls.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'MagicRing';
+  font-style: normal;
+  font-weight: normal;
+  src:local('MagicRing'), url('../font/MagicRing.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'TOA';
+  font-style: normal;
+  font-weight: normal;
+  src:local('MagicRing'), url('../font/TOA_Heavy_Industries.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Ikamodoki';
+  font-style: normal;
+  font-weight: normal;
+  src:local('Ikamodoki'), url('../font/ikamodoki1_0.ttf') format('truetype');
+}
+
