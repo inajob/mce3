@@ -60,13 +60,16 @@ body,html{
   width:40%;
   height:100%;
   float:right;
-  background-color: #dfd;
+  background-color: #ddd;
 }
 
 #control {
   width: 100%;
-  height: 1em;
-  text-align: right;
+  height: 1.5em;
+  text-align: center;
+}
+#control button{
+  width: 80%;
 }
 
 #editor {
@@ -75,7 +78,7 @@ body,html{
 }
 #source-outer {
   width: 100%;
-  height: calc(50% - 1em);
+  height: calc(50% - 1.5em);
 }
 #source{
   width: 100%;
@@ -175,10 +178,10 @@ body,html{
         </div>
       </div>
       <div id="right">
-        <div id="control">
-          <button id="twit">Twit</button>
-        </div>
         <div id="editor"></div>
+        <div id="control">
+          <button id="twit">Imgurに画像を投稿し魔法陣をTwitする。</button>
+        </div>
         <div id="source-outer"><textarea id="source"></textarea></div>
       </div>
     </div>
