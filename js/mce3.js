@@ -1,4 +1,4 @@
-function init(nextFunc){
+function init(ctx, nextFunc){
 
 // === Prelude ===
         var prelude = (function () {/*
@@ -342,7 +342,7 @@ function init(nextFunc){
 
   function draw(){
     var fonts = new Fonts(); // google fonts
-    var r = new Renderer(fonts);
+    var renderSvg = new RendererSVG(fonts);
     var p = new SimpleParser();
 
     let worker = null;
@@ -369,10 +369,16 @@ function init(nextFunc){
         //console.log(sout)
         //console.log(out)
         //console.log(debug)
-        r.render(out, 800);
-        //console.log("render", r.svgData)
-        var svgText = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-1,-1,2,2">' + r.svgData.join("\n")+ "</svg>"
+        renderSvg.render(out, 800);
+        //console.log("render", renderSvg.svgData)
+        var svgText = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-1,-1,2,2">' + renderSvg.svgData.join("\n")+ "</svg>"
         nextFunc(svgText);
+
+        // canvas
+
+        var renderCanvas = new Renderer(ctx, fonts, 400);
+        renderCanvas.render(out, 400, 400);
+
 
       }catch(e){
         debug += e + '\n\n';
