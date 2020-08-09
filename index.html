@@ -137,9 +137,8 @@ body,html{
             var link = o.data.link;
             var m = link.match(/https:\/\/i\.imgur\.com\/([a-zA-Z0-9]*)\.png/);
             var imgurUrl= 'https://imgur.com/' + m[1];
-            var text = "#MagicalCircleEngine " + document.location.href;
-            var url = imgurUrl
-            window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(url), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1');
+            var text = imgurUrl + " #MagicalCircleEngine " + document.location.href;
+            window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1');
           })
         });
       });
