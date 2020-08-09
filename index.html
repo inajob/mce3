@@ -130,7 +130,7 @@ body,html{
         fetch('https://webs.inajob.tk/imgup/up.php', {
           method: 'POST',
           mode: 'cors',
-          body: url,
+          body: encodeURIComponent(url),
         }).then((res) => {
           res.json().then((o) => {
             console.log(o);
