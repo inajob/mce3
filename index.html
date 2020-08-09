@@ -139,7 +139,7 @@ body,html{
             var link = o.data.link;
             var m = link.match(/https:\/\/i\.imgur\.com\/([a-zA-Z0-9]*)\.png/);
             var imgurUrl= 'https://imgur.com/' + m[1];
-            var text = imgurUrl + " #MagicalCircleEngine " + document.location.href;
+            var text = "魔法陣エンジン " + imgurUrl + " #MagicalCircleEngine";
             window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1');
           })
         });
