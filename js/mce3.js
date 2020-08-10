@@ -1,4 +1,4 @@
-function init(ctx, nextFunc){
+function init(ctx, nextFunc, errorFunc){
 
 // === Prelude ===
         var prelude = (function () {/*
@@ -372,17 +372,17 @@ function init(ctx, nextFunc){
         renderSvg.render(out, 800);
         //console.log("render", renderSvg.svgData)
         var svgText = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="-1,-1,2,2">' + renderSvg.svgData.join("\n")+ "</svg>"
-        nextFunc(svgText);
+        nextFunc(svgText, debug);
 
         // canvas
 
         var renderCanvas = new Renderer(ctx, fonts, 400);
         renderCanvas.render(out, 400, 400);
 
-
       }catch(e){
         debug += e + '\n\n';
         console.log(e)
+        errorFunc(debug)
       }
     }
   }
