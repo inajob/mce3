@@ -65,7 +65,11 @@ RendererSVG.prototype = {
   },
   lineTo:function(x,y){
     //this.ctx.lineTo(this.afX(x,y), this.afY(x,y));
-    this.pathData = this.pathData.concat(["L", this.afX(x, y), this.afY(x, y)])
+    let mode = "L";
+    if(this.pathData.length == 0){
+      mode = "M"
+    }
+    this.pathData = this.pathData.concat([mode, this.afX(x, y), this.afY(x, y)])
     this.lastPoint = [this.afX(x, y), this.afY(x, y)];
   },
   path: function(){
