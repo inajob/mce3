@@ -65,7 +65,7 @@ body,html{
 
 #control {
   width: 100%;
-  height: 1.5em;
+  height: 3em;
   text-align: center;
 }
 #control button{
@@ -74,11 +74,10 @@ body,html{
 
 #editor {
   width: 100%;
-  height: 50%;
+  height: 75%;
 }
 #con {
-  width: 100%;
-  height: calc(25%);
+  height: calc(25% - 3em - 30px);
   background-color: #aaa;
   color: #000;
   over-flow: scroll;
@@ -89,10 +88,13 @@ body,html{
 #source-outer {
   width: 100%;
   height: calc(25% - 1.5em);
+  display:none;
 }
 #source{
   width: 100%;
   height: 100%;
+  word-break: break-all;
+  display:none;
 }
 
     </style>
@@ -121,6 +123,7 @@ body,html{
 
         let source = document.getElementById("source");
         source.value = svgText
+        sourceText= svgText;
 
         let con = document.getElementById("con");
         console.log("erro", debug)
@@ -140,7 +143,7 @@ body,html{
         }
         timer = setTimeout(() => {
           init(ctx, next);
-          history.replaceState(null, null, "?" + encodeURIComponent(editor.getValue()).replace(/%20/g,"+"))
+          history.replaceState(null, null, "?" + encodeURIComponent(editor.getValue()).replace(/%20/g,"+").replace(/!/g,"%21"))
         }, 200);
       })
 
@@ -164,6 +167,11 @@ body,html{
             window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text), 'tweetwindow', 'width=650, height=470, personalbar=0, toolbar=0, scrollbars=1, sizable=1');
           })
         });
+      });
+      let sourceBtn = document.getElementById("source-btn")
+      sourceBtn.addEventListener("click", function(){
+        alert("show source in debug console")
+        console.log(sourceText);
       });
     });
   </script>
@@ -196,9 +204,10 @@ body,html{
         <div id="editor"></div>
         <div id="control">
           <button id="twit">Imgurに画像を投稿し魔法陣をTwitする。</button>
+          <button id="source-btn">XMLのソースを表示</button>
         </div>
         <div id="con">debug console</div>
-        <div id="source-outer"><textarea id="source"></textarea></div>
+        <div id="source-outer"><textarea id="source" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea></div>
       </div>
     </div>
   </body>
