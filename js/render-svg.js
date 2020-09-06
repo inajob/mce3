@@ -15,6 +15,7 @@ var RendererSVG = function(fonts){
   this.strokeStyle = "black";
   this.fontName = "";
   this.lastPoint = [0,0];
+  this.clipPathId = null;
 };
 RendererSVG.prototype = {
   afX:function(x,y){return this.affine.calc(parseFloat(x), parseFloat(y))[0];},
@@ -135,15 +136,32 @@ RendererSVG.prototype = {
   },
   fill:function(){
     //this.ctx.fill();
+    let clipPath = "";
+    if(this.clipPathId){
+      clipPath = ' clip-path="url(#' + this.clipPathId + ')" '
+    }
+
     //this.svgData.push('<path d="' + this.pathData.join(" ") + '" fill="black" />')
-    this.svgData.push('<path d="' + this.pathData.join(" ") + '" stroke="none"' + ' fill="' + this.fillStyle + '" />')
+    this.svgData.push('<path d="' + this.pathData.join(" ") + '" stroke="none"' + ' fill="' + this.fillStyle + '"'+ clipPath+' />')
   },
   stroke:function(){
     //this.ctx.stroke();
-    this.svgData.push('<path d="' + this.pathData.join(" ") + '" stroke="' + this.strokeStyle + '" stroke-width="' + this.lineWidth + '" stroke-linejoin="round"  fill="none" />')
+    let clipPath = "";
+    if(this.clipPathId){
+      clipPath = ' clip-path="url(#' + this.clipPathId + ')" '
+    }
+    this.svgData.push('<path d="' + this.pathData.join(" ") + '" stroke="' + this.strokeStyle + '" stroke-width="' + this.lineWidth + '" stroke-linejoin="round"  fill="none"' + clipPath + '/>')
   },
-  clip:function(){this.ctx.save();this.ctx.clip();},
-  resetClip:function(){this.ctx.restore();},
+  clip:function(){
+    //this.ctx.save();
+    //this.ctx.clip();
+    this.svgData.push('<clipPath id="test"><path d="' + this.pathData.join(" ") + '" /></clipPath>');
+    this.clipPathId = "test"
+  },
+  resetClip:function(){
+    //this.ctx.restore();
+    this.clipPathId = null;
+  },
 
   affine:function(m11, m12, m21, m22, dx, dy){this.ctx.save();this.ctx.transform(m11, m12, m21, m22, dx, dy);},
   resetAffine:function(){this.ctx.restore();},
