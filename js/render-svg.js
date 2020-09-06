@@ -155,8 +155,9 @@ RendererSVG.prototype = {
   clip:function(){
     //this.ctx.save();
     //this.ctx.clip();
-    this.svgData.push('<clipPath id="test"><path d="' + this.pathData.join(" ") + '" /></clipPath>');
-    this.clipPathId = "test"
+    let id = "clip-" + Math.floor(Math.random()*1000)
+    this.svgData.push('<clipPath id="' + id + '"><path d="' + this.pathData.join(" ") + '" /></clipPath>');
+    this.clipPathId = id
   },
   resetClip:function(){
     //this.ctx.restore();
